@@ -1,8 +1,8 @@
 resource "aws_security_group" "lb-sg" {
-  provider      = aws.region-master
-  name          = "lb-sg"
-  description   = "Allow 443 and traffic to Jenkins SG"
-  vpc_id        = aws_vpc.vpc_master.id
+  provider    = aws.region-master
+  name        = "lb-sg"
+  description = "Allow 443 and traffic to Jenkins SG"
+  vpc_id      = aws_vpc.vpc_master.id
   ingress {
     description = "Allows 443 from anywhere"
     from_port   = 443
@@ -26,23 +26,23 @@ resource "aws_security_group" "lb-sg" {
 }
 
 resource "aws_security_group" "jenkins-sg" {
-  provider      = aws.region-master
-  name          = "jenkins-sg"
-  description   = "Allow TCP/8080 and TCP/22"
-  vpc_id        = aws_vpc.vpc_master.id
+  provider    = aws.region-master
+  name        = "jenkins-sg"
+  description = "Allow TCP/8080 and TCP/22"
+  vpc_id      = aws_vpc.vpc_master.id
   ingress {
     description = "Allows 22 from our public IP"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["var.external_ip"]
+    cidr_blocks = [var.external_ip]
   }
   ingress {
-    description = "Allows anyone on port 8080"
-    from_port   = 8080
-    to_port     = 8080
-    protocol    = "tcp"
-    cidr_blocks = ["aws_security_group.lb-sg.id"]
+    description     = "Allows anyone on port 8080"
+    from_port       = 8080
+    to_port         = 8080
+    protocol        = "tcp"
+    security_groups = [aws_security_group.lb-sg.id]
   }
   ingress {
     description = "Allows traffic from us-west-2"
@@ -61,16 +61,16 @@ resource "aws_security_group" "jenkins-sg" {
 
 
 resource "aws_security_group" "jenkins-sg-oregon" {
-  provider      = aws.region-worker
-  name          = "jenkins-sg-oregon"
-  description   = "Allow TCP/22"
-  vpc_id        = aws_vpc.vpc_master_oregon.id
+  provider    = aws.region-worker
+  name        = "jenkins-sg-oregon"
+  description = "Allow TCP/22"
+  vpc_id      = aws_vpc.vpc_master_oregon.id
   ingress {
     description = "Allows 22 from our public IP"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["var.external_ip"]
+    cidr_blocks = [var.external_ip]
   }
   ingress {
     description = "Allows traffic from us-east-1"

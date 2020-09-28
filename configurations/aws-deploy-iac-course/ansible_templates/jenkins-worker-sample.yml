@@ -1,0 +1,10 @@
+---
+- host: "{{ passed_in_hosts }}"
+  become: yes
+  remote_user: ec2_user
+  become_user: root
+  tasks:
+  - name: install js, JSON parser
+    yum:
+      name: jq
+      state: present
