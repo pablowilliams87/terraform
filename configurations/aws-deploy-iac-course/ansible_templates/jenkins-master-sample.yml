@@ -1,5 +1,5 @@
 ---
-- host: "{{ passed_in_hosts }}"
+- hosts: "{{ passed_in_hosts }}"
   become: yes
   remote_user: ec2_user
   become_user: root
