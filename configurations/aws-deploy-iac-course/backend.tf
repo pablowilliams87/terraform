@@ -4,6 +4,6 @@ terraform {
     region  = "us-east-1"
     profile = "default"
     key     = "terra-backed-statefile"
-    bucket  = "terratest-pw-backend2"
+    bucket  = "terratest-pw-backend"
   }
 }
