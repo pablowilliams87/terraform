@@ -7,7 +7,6 @@ variable "ami-image" {
 }
 
 resource "aws_security_group" "allow_ssh" {
-  name = "allow_ssh"
 
   ingress {
     description = "Allow ALL Ingress"
@@ -38,7 +37,7 @@ resource "aws_instance" "k8s-masters" {
   tags = {
     Name = "k8s-master-${count.index}"
   }
-  count = 2
+  count = 1
 }
 
 resource "aws_instance" "k8s-workers" {
@@ -49,7 +48,7 @@ resource "aws_instance" "k8s-workers" {
   tags = {
     Name = "k8s-worker-${count.index}"
   }
-  count = 3
+  count = 4
 }
 /*
 output "public-ips-masters" {
