@@ -21,8 +21,8 @@ resource "aws_eks_node_group" "eks_node" {
 
   scaling_config {
     desired_size = var.eks_node_instances[0]
-    max_size     = var.eks_node_instances[1]
-    min_size     = var.eks_node_instances[2]
+    min_size     = var.eks_node_instances[1]
+    max_size     = var.eks_node_instances[2]
   }
 
   depends_on = [

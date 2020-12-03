@@ -35,8 +35,36 @@ resource "aws_iam_role_policy_attachment" "AmazonEKSServicePolicy" {
   EKS NODE PERMISSION
 */
 
+resource "aws_iam_role_policy" "eks_nodes_asg" {
+  name = "eks-nodes-asg"
+  role = aws_iam_role.eks_nodes.id
+
+  policy = <<-EOF
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Action": [
+          "autoscaling:DescribeAutoScalingGroups",
+          "autoscaling:DescribeAutoScalingInstances",
+          "autoscaling:DescribeLaunchConfigurations",
+          "autoscaling:DescribeTags",
+          "autoscaling:SetDesiredCapacity",
+          "autoscaling:TerminateInstanceInAutoScalingGroup",
+          "ec2:DescribeLaunchTemplateVersions"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
+      }
+    ]
+  }
+  EOF
+}
+
+
+
 resource "aws_iam_role" "eks_nodes" {
-  name = "eks-node-group-tuto"
+  name = "eks-nodes"
 
   assume_role_policy = <<POLICY
 {

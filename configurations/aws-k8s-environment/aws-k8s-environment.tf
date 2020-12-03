@@ -48,7 +48,7 @@ resource "aws_instance" "k8s-workers" {
   tags = {
     Name = "k8s-worker-${count.index}"
   }
-  count = 4
+  count = 3
 }
 /*
 output "public-ips-masters" {

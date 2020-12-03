@@ -13,6 +13,11 @@ variable "vpc_subnet" {
   default     = "10.10.0.0/16"
 }
 
+variable "eks_k8s_version" {
+  description = "AWS K8s Version"
+  default     = "1.18.2"
+}
+
 variable "eks_cluster_name" {
   description = "AWS EKS Cluster Name"
   default     = "eks-ops"
@@ -29,11 +34,11 @@ variable "eks_subnets" {
 
 variable "eks_node_instances" {
   description = "AWS EKS Instances Count"
-  # Desired, Max, Min
-  default = [3, 3, 3]
+  # Desired, Min, Max
+  default = [3, 3, 8]
 }
 
 variable "eks_node_instance_type" {
   description = "AWS EKS Instance Type"
-  default     = "t2.micro"
+  default     = "t3.medium"
 }
