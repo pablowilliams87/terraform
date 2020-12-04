@@ -1,6 +1,10 @@
 resource "aws_eks_cluster" "eks_cluster" {
+  depends_on = [aws_cloudwatch_log_group.eks_cluster]
+
   name     = var.eks_cluster_name
   role_arn = aws_iam_role.eks_cluster.arn
+
+  enabled_cluster_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
 
   vpc_config {
     subnet_ids = aws_subnet.eks_routing[*].id
@@ -29,5 +33,6 @@ resource "aws_eks_node_group" "eks_node" {
     aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly,
+    aws_iam_role_policy_attachment.AmazonEC2CloudWatchAgent
   ]
 }

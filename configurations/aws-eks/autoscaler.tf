@@ -12,7 +12,6 @@ resource "helm_release" "cluster_autoscaler" {
   repository = "https://kubernetes.github.io/autoscaler"
   chart      = "cluster-autoscaler"
   namespace  = "kube-system"
-  //  version    = "1.1.1"
 
   set {
     name  = "nameOverride"
@@ -49,17 +48,5 @@ resource "helm_release" "cluster_autoscaler" {
     value = "v1.18.2"
   }
 
-
-  /*
-  set {
-    name  = "rbac.create"
-    value = "true"
-  }
-
-  set {
-    name  = "sslCertPath"
-    value = "/etc/ssl/certs/ca-bundle.crt"
-  }
-*/
 }
 

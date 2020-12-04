@@ -42,3 +42,13 @@ variable "eks_node_instance_type" {
   description = "AWS EKS Instance Type"
   default     = "t3.medium"
 }
+
+variable "eks_log_retention_cluster" {
+  description = "AWS EKS Cluster Log Retention Days"
+  default     = "7"
+}
+
+variable "eks_log_retention_containers" {
+  description = "AWS EKS Containers Log Retention Days"
+  default     = "7"
+}

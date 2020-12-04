@@ -14,6 +14,6 @@ provider "null" {}
 ##
 ##  TODO: 
 ##  - Configurar version especifica de k8s
-##  - Ejecutar en maquina local el comando 'aws eks update-kubeconfig --name eks-ops'
+##
 ##  
 ##
