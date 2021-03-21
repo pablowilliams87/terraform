@@ -1,3 +1,8 @@
+resource "aws_key_pair" "pk" {
+  key_name   = "${var.environment}-pk"
+  public_key = var.eks_workers_public_key
+}
+
 resource "aws_eks_cluster" "eks_cluster" {
   depends_on = [aws_cloudwatch_log_group.eks_cluster]
 
@@ -27,6 +32,10 @@ resource "aws_eks_node_group" "eks_node" {
     desired_size = var.eks_node_instances[0]
     min_size     = var.eks_node_instances[1]
     max_size     = var.eks_node_instances[2]
+  }
+
+  remote_access {
+    ec2_ssh_key = aws_key_pair.pk.id
   }
 
   depends_on = [
