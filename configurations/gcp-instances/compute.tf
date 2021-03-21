@@ -1,12 +1,16 @@
 resource "google_compute_instance" "private_instance" {
-  name         = "private-instance"
-  machine_type = var.gcp_machine_type
+  name                      = "private-instance"
+  machine_type              = var.gcp_machine_type
   allow_stopping_for_update = true
-  tags = ["private"]
+  tags                      = ["private"]
 
   service_account {
-    email = "devops-assignment-evbox@evbox-infrastructure.iam.gserviceaccount.com"
-    scopes = [ "cloud-platform" ]
+    email  = "devops-assignment-evbox@evbox-infrastructure.iam.gserviceaccount.com"
+    scopes = ["cloud-platform"]
+  }
+
+  metadata = {
+    ssh-keys = "${var.gcp_ssh_user}:${file(var.gcp_ssh_public_key)}"
   }
 
   boot_disk {
@@ -28,15 +32,21 @@ resource "google_compute_address" "public_ip" {
 
 
 resource "google_compute_instance" "public_instance" {
-  name         = "public-instance"
-  machine_type = var.gcp_machine_type
+  name                      = "public-instance"
+  machine_type              = var.gcp_machine_type
   allow_stopping_for_update = true
-  tags = ["public", "bastion"]
+  tags                      = ["public", "bastion"]
 
   service_account {
-    email = "devops-assignment-evbox@evbox-infrastructure.iam.gserviceaccount.com"
-    scopes = [ "cloud-platform" ]
+    email  = "devops-assignment-evbox@evbox-infrastructure.iam.gserviceaccount.com"
+    scopes = ["cloud-platform"]
   }
+
+  metadata = {
+    ssh-keys = "${var.gcp_ssh_user}:${file(var.gcp_ssh_public_key)}"
+  }
+  
+  metadata_startup_script = "echo '${file(var.gcp_ssh_private_key)}' > /tmp/id_rsa"
 
   boot_disk {
     initialize_params {
