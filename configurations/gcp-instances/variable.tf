@@ -34,8 +34,10 @@ variable "gcp_ssh_user" {
 
 variable "gcp_ssh_public_key" {
   description = "GCP Instance SSH Public Key"
+  sensitive   = true
 }
 
 variable "gcp_ssh_private_key" {
   description = "GCP Instance Private Key"
+  sensitive   = true
 }
